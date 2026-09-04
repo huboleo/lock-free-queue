@@ -24,6 +24,9 @@ queue_operation_error_to_string(QueueOperationError error) noexcept {
 }
 
 template <typename T, std::size_t N> class LFQueue {
+    static_assert(N > 0, "Buffer size must be greater than 0");
+    static_assert((N & (N - 1)) == 0, "Buffer size must be a power of two");
+
   public:
     [[nodiscard]] std::expected<void, QueueOperationError> push(T&& data);
     [[nodiscard]] std::expected<void, QueueOperationError> push(const T& data);
